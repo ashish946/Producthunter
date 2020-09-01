@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
+from django.contrib.auth import authenticate
 
 def signup(request):
     if request.method=='POST':
@@ -23,7 +24,7 @@ def signup(request):
 
 def login(request):
     if request.method == 'POST':
-        user=auth.authenticate(username=request.POST['username'],password=request.POST['password'])
+        user=authenticate(username=request.POST.get('username'),password=request.POST.get('password'))
         if user is not None:
             auth.login(request,user)
             return redirect('home')
